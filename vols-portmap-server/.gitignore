@@ -1,0 +1,9 @@
+# Private host keys
+/ssh_host_*_key
+# Public host keys
+/ssh_host_*_key.pub
+
+# Client's private key
+/ssh_client_key.pub
+# Client's public key
+/ssh_client_key

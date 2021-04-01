@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  portmap-server:
+    image: dmotte/portmap-server
+    build: docker-build
+    restart: always
+    network_mode: bridge
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # Host keys
+      - ./vols-portmap-server/ssh_host_dsa_key:/etc/ssh/ssh_host_dsa_key:ro
+      - ./vols-portmap-server/ssh_host_dsa_key.pub:/etc/ssh/ssh_host_dsa_key.pub:ro
+      - ./vols-portmap-server/ssh_host_ecdsa_key:/etc/ssh/ssh_host_ecdsa_key:ro
+      - ./vols-portmap-server/ssh_host_ecdsa_key.pub:/etc/ssh/ssh_host_ecdsa_key.pub:ro
+      - ./vols-portmap-server/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key:ro
+      - ./vols-portmap-server/ssh_host_ed25519_key.pub:/etc/ssh/ssh_host_ed25519_key.pub:ro
+      - ./vols-portmap-server/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key:ro
+      - ./vols-portmap-server/ssh_host_rsa_key.pub:/etc/ssh/ssh_host_rsa_key.pub:ro
+      # Client's public key
+      - ./vols-portmap-server/ssh_client_key.pub:/home/portmap/.ssh/keys/ssh_client_key.pub:ro
+    ports:
+      - "80:8080"
+      - "2222:22"

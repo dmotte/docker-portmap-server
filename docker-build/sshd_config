@@ -1,0 +1,33 @@
+LogLevel VERBOSE
+
+PermitRootLogin no
+# Allow only the portmap user to login
+AllowUsers portmap
+
+# Allow public key authentication only
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+PasswordAuthentication no
+
+# Disable almost every service globally
+AllowAgentForwarding no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
+# Disable tun device forwarding
+PermitTunnel no
+# Disable client-to-server port forwarding
+PermitOpen none
+# Disable TTY access
+PermitTTY no
+ForceCommand echo "This SSH server can only be used for TCP port forwarding"
+
+# Don't look up the remote host name. This usually results in faster connection
+# times
+UseDNS no
+
+Match User portmap
+    # Allow server-to-client port forwarding only
+    AllowTcpForwarding remote
+    # Expose forwarded ports to the public (not only localhost)
+    GatewayPorts yes
