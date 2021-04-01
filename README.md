@@ -1,5 +1,9 @@
 # docker-portmap-server
 
+![](portmap-server-icon-149.png)
+
+![Docker Pulls](https://img.shields.io/docker/pulls/dmotte/portmap-server)
+
 TODO
 
 TODO arm note with manual commands, and gh actions is unusable because of [this issue](https://github.community/t/docker-pull-from-public-github-package-registry-fail-with-no-basic-auth-credentials-error/16358)
