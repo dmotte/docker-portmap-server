@@ -10,6 +10,8 @@ This is a :whale: **Docker image** containing an **OpenSSH server** that can be 
 
 ## Usage
 
+TODO warning, unprivileged user portmap, port < 1024, but with docker port can be any
+
 TODO keys generation with:
 
 ```bash
