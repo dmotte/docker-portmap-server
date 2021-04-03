@@ -53,6 +53,29 @@ docker run -it --rm \
     dmotte/portmap-server
 ```
 
+To test the server on-the-fly, you can connect to it and setup a remote port forwarding tunnel, by running the following OpenSSH command in another shell:
+
+```bash
+ssh \
+    -i ssh_client_key \
+    portmap@localhost \
+    -p 2222 \
+    -N \
+    -R 8080:google.it:80
+```
+
+This will serve `http://google.it/` on port `8080` of the server container. Note that, for this to work, the `ssh_client_key` must have **`600` permissions**. If this isn't the case, you can achieve it with:
+
+```bash
+chmod 600 ssh_client_key
+```
+
+You can now test that your remote port forwarding tunnel is working with *cURL*:
+
+```bash
+curl http://localhost/
+```
+
 For a more complex example, refer to the `docker-compose.yml` file.
 
 ## Development
@@ -81,27 +104,4 @@ In this case, you can view the logs using the `docker-compose logs` command:
 
 ```bash
 docker-compose logs -ft
-```
-
-To test the server on-the-fly, you can connect to it and setup a remote port forwarding tunnel with the following OpenSSH command:
-
-```bash
-ssh \
-    -i vols-portmap-server/ssh_client_key \
-    portmap@localhost \
-    -p 2222 \
-    -N \
-    -R 8080:google.it:80
-```
-
-This will serve `http://google.it/` on port `8080` of the server container. Note that, for this to work, the `vols-portmap-server/ssh_client_key` must have **`600` permissions**. You can achieve this with:
-
-```bash
-chmod 600 vols-portmap-server/ssh_client_key
-```
-
-You can now test that your remote port forwarding tunnel is working with *cURL*:
-
-```bash
-curl http://localhost/
 ```
