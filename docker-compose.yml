@@ -19,7 +19,7 @@ services:
       - ./vols-portmap-server/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key:ro
       - ./vols-portmap-server/ssh_host_rsa_key.pub:/etc/ssh/ssh_host_rsa_key.pub:ro
       # Client's public key
-      - ./vols-portmap-server/ssh_client_key.pub:/home/portmap/.ssh/keys/ssh_client_key.pub:ro
+      - ./vols-portmap-server/ssh_client_key.pub:/authorized_keys/ssh_client_key.pub:ro
     ports:
       - "80:8080"
       - "2222:22"

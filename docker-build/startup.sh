@@ -5,8 +5,13 @@ set -ex
 # Generate host keys if not already present
 ssh-keygen -A
 
+if [ ! -d "/authorized_keys" ]; then
+    echo "ERROR: the /authorized_keys directory doesn't exist"
+    exit 1
+fi
+
 # Add all the clients' public keys to the authorized_keys file
-for i in "/home/portmap/.ssh/keys"/*; do
+for i in "/authorized_keys"/*; do
     cat $i >> "/home/portmap/.ssh/authorized_keys"
 done
 
