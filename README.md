@@ -11,7 +11,7 @@ This is a :whale: **Docker image** containing an **OpenSSH server** that can be 
 
 ## Usage
 
-> **Note**: this Docker image uses a **built-in unprivileged user** (called `portmap`) to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers < 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
+> **Note**: this Docker image uses a **built-in unprivileged user** (called `portmap`) to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
 
 The first thing you'll need are **host keys** for the OpenSSH server. You can generate them with the following commands:
 
@@ -22,7 +22,7 @@ mv hostkeys/etc/ssh/* hostkeys
 rm -r hostkeys/etc
 ```
 
-If you omit this step, this image will generate them internally, but they will be different each time and of course container startup will also be a little slower.
+If you omit this step, the startup script will generate them internally, but they will be different each time and of course container startup will also be a little slower.
 
 Then you'll have to generate an **SSH key pair** for each client:
 
@@ -53,7 +53,7 @@ docker run -it --rm \
     dmotte/portmap-server
 ```
 
-For a more complex example, please refer to the `docker-compose.yml` file.
+For a more complex example, refer to the `docker-compose.yml` file.
 
 ## Development
 
