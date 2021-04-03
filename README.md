@@ -64,7 +64,7 @@ ssh \
     -R 8080:google.it:80
 ```
 
-This will serve `http://google.it/` on port `8080` of the server container. Note that, for this to work, the `ssh_client_key` must have **`600` permissions**. If this isn't the case, you can achieve it with:
+This will serve `http://google.it/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `ssh_client_key` must have **`600` permissions**. If this isn't the case, you can achieve it with:
 
 ```bash
 chmod 600 ssh_client_key
@@ -86,7 +86,7 @@ If you want to contribute to this project, the first thing you have to do is to 
 git clone https://github.com/dmotte/docker-portmap-server.git
 ```
 
-Then you'll have to create your **host keys** and `ssh_client_key` **keypair** inside the `vols-portmap-server` directory and run:
+Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `vols-portmap-server` directory and run:
 
 ```bash
 docker-compose up --build
