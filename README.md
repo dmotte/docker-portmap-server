@@ -24,7 +24,7 @@ mv hostkeys/etc/ssh/* hostkeys
 rm -r hostkeys/etc
 ```
 
-If you omit this step, the startup script will generate them internally, but they will be different each time and of course container startup will also be a little slower.
+This will create a folder named :file_folder: `hostkeys` containing your OpenSSH server host keys. If you omit this step, the startup script will generate them internally, but they will be different each time and of course container startup will also be a little slower.
 
 Then you'll have to generate an **SSH key pair** for each client:
 
@@ -35,7 +35,7 @@ ssh-keygen -N "" -f ssh_client_key
 This will create two files:
 
 - :page_facing_up: `ssh_client_key`: the client's **private** SSH key, which should be given to the client
-- :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/ssh_client_key.pub` inside the container
+- :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/authorized_keys/ssh_client_key.pub` inside the server container
 
 Now you can start the server with:
 
@@ -88,7 +88,7 @@ If you want to contribute to this project, the first thing you have to do is to 
 git clone https://github.com/dmotte/docker-portmap-server.git
 ```
 
-Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `vols-portmap-server` directory and run:
+Edit the `docker-compose.yml` file to match your needs. Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `vols-portmap-server` directory and run:
 
 ```bash
 docker-compose up --build
