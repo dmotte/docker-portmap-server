@@ -91,7 +91,7 @@ git clone https://github.com/dmotte/docker-portmap-server.git
 Edit the `docker-compose.yml` file to match your needs. Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `vols-portmap-server` directory and run:
 
 ```bash
-docker-compose up --build
+docker-compose down && docker-compose up --build
 ```
 
 This will automatically **build the Docker image** using the `docker-build` directory as build context and then the **Docker-Compose stack** will be started.
