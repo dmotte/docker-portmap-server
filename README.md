@@ -1,6 +1,6 @@
 # docker-portmap-server
 
-![](portmap-server-icon-149.png)
+![](icon-149.png)
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dmotte/docker-portmap-server/docker?logo=github&style=flat-square)](https://github.com/dmotte/docker-portmap-server/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dmotte/portmap-server?logo=docker&style=flat-square)](https://hub.docker.com/r/dmotte/portmap-server)
@@ -74,7 +74,7 @@ This will serve `http://google.it/` on port `8080` of the server container, whic
 chmod 600 ssh_client_key
 ```
 
-You can now test that your remote port forwarding tunnel is working with *cURL*:
+You can now test that your remote port forwarding tunnel is working with _cURL_:
 
 ```bash
 curl http://localhost/
