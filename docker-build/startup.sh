@@ -12,7 +12,7 @@ fi
 
 # Add all the clients' public keys to the authorized_keys file
 for i in "/authorized_keys"/*; do
-    cat $i >> "/home/portmap/.ssh/authorized_keys"
+    cat "$i" >> "/home/portmap/.ssh/authorized_keys"
 done
 
 # Set valid permissions on the authorized_keys file
