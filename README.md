@@ -9,7 +9,7 @@ This is a :whale: **Docker image** containing an **OpenSSH server** that can be 
 
 It is meant to act as a server for the [dmotte/portmap-client](https://github.com/dmotte/docker-portmap-client) image, but should work with any OpenSSH client.
 
-> :package: This image is also on **Docker Hub** as [`dmotte/portmap-server`](https://hub.docker.com/r/dmotte/portmap-server) and runs on **several architectures** (e.g. amd64, arm64, ...). To see the full list of supported platforms, please refer to the `.github/workflows/release.yml` file. If you need an architecture which is currently unsupported, feel free to open an issue.
+> :package: This image is also on **Docker Hub** as [`dmotte/portmap-server`](https://hub.docker.com/r/dmotte/portmap-server) and runs on **several architectures** (e.g. amd64, arm64, ...). To see the full list of supported platforms, please refer to the [`.github/workflows/release.yml`](.github/workflows/release.yml) file. If you need an architecture which is currently unsupported, feel free to open an issue.
 
 > :calendar: The build process of this Docker image is **triggered automatically every month** (thanks, [GitHub Actions](https://github.com/features/actions)! :smile:) to ensure that you get it with all the latest updated packages. See the [workflow file](.github/workflows/release.yml) for further information.
 
@@ -80,7 +80,7 @@ You can now test that your remote port forwarding tunnel is working with _cURL_:
 curl http://localhost/
 ```
 
-For a more complex example, refer to the `docker-compose.yml` file.
+For a more complex example, refer to the [`docker-compose.yml`](docker-compose.yml) file.
 
 ## Development
 
@@ -90,7 +90,7 @@ If you want to contribute to this project, the first thing you have to do is to 
 git clone https://github.com/dmotte/docker-portmap-server.git
 ```
 
-Edit the `docker-compose.yml` file to match your needs. Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `volumes` directory and run:
+Edit the [`docker-compose.yml`](docker-compose.yml) file to match your needs. Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `volumes` directory and run:
 
 ```bash
 docker-compose down && docker-compose up --build
