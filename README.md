@@ -11,8 +11,6 @@ It is meant to act as a server for the [dmotte/portmap-client](https://github.co
 
 > :package: This image is also on **Docker Hub** as [`dmotte/portmap-server`](https://hub.docker.com/r/dmotte/portmap-server) and runs on **several architectures** (e.g. amd64, arm64, ...). To see the full list of supported platforms, please refer to the [`.github/workflows/release.yml`](.github/workflows/release.yml) file. If you need an architecture which is currently unsupported, feel free to open an issue.
 
-> :calendar: The build process of this Docker image is **triggered automatically every month** (thanks, [GitHub Actions](https://github.com/features/actions)! :smile:) to ensure that you get it with all the latest updated packages. See the [workflow file](.github/workflows/release.yml) for further information.
-
 ## Usage
 
 > **Note**: this Docker image uses a **built-in unprivileged user** (called `portmap`) to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
@@ -84,28 +82,8 @@ For a more complex example, refer to the [`docker-compose.yml`](docker-compose.y
 
 ## Development
 
-If you want to contribute to this project, the first thing you have to do is to **clone this repository** on your local machine:
-
-```bash
-git clone https://github.com/dmotte/docker-portmap-server.git
-```
-
-Edit the [`docker-compose.yml`](docker-compose.yml) file to match your needs. Then you'll have to create your **host keys** and `ssh_client_key` **keypair** (see the [Usage](#Usage) section of this document) inside the `volumes` directory and run:
+If you want to contribute to this project, you can use the following one-liner to **rebuild the image** and bring up the **Docker-Compose stack** every time you make a change to the code:
 
 ```bash
 docker-compose down && docker-compose up --build
-```
-
-This will automatically **build the Docker image** using the `build` directory as build context and then the **Docker-Compose stack** will be started.
-
-If you prefer to run the stack in daemon (detached) mode:
-
-```bash
-docker-compose up -d
-```
-
-In this case, you can view the logs using the `docker-compose logs` command:
-
-```bash
-docker-compose logs -ft
 ```
