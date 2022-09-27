@@ -6,7 +6,7 @@ set -ex
 ssh-keygen -A
 
 if [ ! -d "/authorized_keys" ]; then
-    echo "ERROR: the /authorized_keys directory doesn't exist"
+    echo "ERROR: the /authorized_keys directory doesn't exist" 1>&2
     exit 1
 fi
 
