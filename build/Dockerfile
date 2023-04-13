@@ -4,14 +4,13 @@ FROM alpine
 RUN apk add --no-cache openssh-server
 
 # Copy the OpenSSH Server config
-COPY sshd_config /etc/ssh
+COPY --chown=root:root --chmod=644 sshd_config /etc/ssh/
 
 # Expose the SSH port
 EXPOSE 22
 
 # Copy the startup script
-COPY startup.sh /
-RUN chmod +x /startup.sh
+COPY --chown=root:root --chmod=755 startup.sh /
 
 # Create the portmap user
 RUN addgroup -S portmap && adduser -S portmap -G portmap
