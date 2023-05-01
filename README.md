@@ -29,7 +29,7 @@ This will create a folder named :file_folder: `hostkeys` containing your OpenSSH
 Then you'll have to generate an **SSH key pair** for each client:
 
 ```bash
-ssh-keygen -N "" -f ssh_client_key
+ssh-keygen -t ed25519 -C myclient -N "" -f ssh_client_key
 ```
 
 This will create two files:
