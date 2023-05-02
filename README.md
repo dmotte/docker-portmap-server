@@ -37,6 +37,8 @@ This will create two files:
 - :page_facing_up: `ssh_client_key`: the client's **private** SSH key, which should be given to the client
 - :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/authorized_keys/ssh_client_key.pub` inside the server container
 
+> **Note**: you can also specify [key options](https://man.openbsd.org/OpenBSD-current/man8/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) to the public key file, e.g. `permitlisten="8080" ssh-ed25519 AAAAC3Nza...`
+
 Now you can start the server with:
 
 ```bash
