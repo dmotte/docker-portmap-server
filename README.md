@@ -35,7 +35,7 @@ ssh-keygen -t ed25519 -C myclient -N "" -f ssh_client_key
 This will create two files:
 
 - :page_facing_up: `ssh_client_key`: the client's **private** SSH key, which should be given to the client
-- :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/authorized_keys/ssh_client_key.pub` inside the server container
+- :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/ssh-client-keys/ssh_client_key.pub` inside the server container
 
 > **Note**: you can also specify [key options](https://man.openbsd.org/OpenBSD-current/man8/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) to the public key file, e.g. `permitlisten="8080" ssh-ed25519 AAAAC3Nza...`
 
@@ -49,7 +49,7 @@ docker run -it --rm \
     -v $PWD/hostkeys/ssh_host_ed25519_key.pub:/etc/ssh/ssh_host_ed25519_key.pub:ro \
     -v $PWD/hostkeys/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key:ro \
     -v $PWD/hostkeys/ssh_host_rsa_key.pub:/etc/ssh/ssh_host_rsa_key.pub:ro \
-    -v $PWD/ssh_client_key.pub:/authorized_keys/ssh_client_key.pub:ro \
+    -v $PWD/ssh_client_key.pub:/ssh-client-keys/ssh_client_key.pub:ro \
     -p 80:8080 \
     -p 2222:22 \
     dmotte/portmap-server
