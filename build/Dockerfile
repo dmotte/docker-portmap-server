@@ -9,7 +9,7 @@ COPY --chown=root:root --chmod=644 sshd_config /etc/ssh/
 # Expose the SSH port
 EXPOSE 22
 
-RUN mkdir /ssh-client-keys
+RUN mkdir /ssh-host-keys /ssh-client-keys
 
 # Copy the startup script
 COPY --chown=root:root --chmod=755 startup.sh /

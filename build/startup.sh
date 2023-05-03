@@ -2,10 +2,24 @@
 
 set -ex
 
-# Generate host keys if not already present
+# Get host keys from /ssh-host-keys
+rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
+cp /ssh-host-keys/ssh_host_*_key /etc/ssh/ 2>/dev/null || true
+cp /ssh-host-keys/ssh_host_*_key.pub /etc/ssh/ 2>/dev/null || true
+
+# Generate the missing host keys
 ssh-keygen -A
 
-# Generate the authorized_keys file
+# Set correct permissions on host keys
+chown root:root /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
+chmod 600 /etc/ssh/ssh_host_*_key
+chmod 644 /etc/ssh/ssh_host_*_key.pub
+
+# Copy the (previously missing) generated host keys to /ssh-host-keys
+cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || true
+cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || true
+
+# Generate the authorized_keys file and set correct permissions
 cat /ssh-client-keys/*.pub > /home/portmap/.ssh/authorized_keys 2>/dev/null || true
 chown portmap:portmap /home/portmap/.ssh/authorized_keys
 chmod 600 /home/portmap/.ssh/authorized_keys

@@ -15,7 +15,7 @@ It is meant to act as a server for the [dmotte/portmap-client](https://github.co
 
 > **Note**: this Docker image uses a **built-in unprivileged user** (called `portmap`) to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
 
-The first thing you'll need are **host keys** for the OpenSSH server. You can generate them with the following commands:
+The first thing you need are **host keys** for the OpenSSH server. You can generate them with the following commands:
 
 ```bash
 mkdir -p hostkeys/etc/ssh
@@ -24,7 +24,7 @@ mv hostkeys/etc/ssh/* hostkeys
 rm -r hostkeys/etc
 ```
 
-This will create a folder named :file_folder: `hostkeys` containing your OpenSSH server host keys. If you omit this step, the startup script will generate them internally, but they will be different each time and of course container startup will also be a little slower.
+This creates a folder named :file_folder: `hostkeys` which has to be mounted to `/ssh-host-keys` inside the container. If you omit this step, the startup script will generate the host keys internally and try to copy them to `/ssh-host-keys`.
 
 Then you'll have to generate an **SSH key pair** for each client:
 
@@ -43,12 +43,7 @@ Now you can start the server with:
 
 ```bash
 docker run -it --rm \
-    -v $PWD/hostkeys/ssh_host_ecdsa_key:/etc/ssh/ssh_host_ecdsa_key:ro \
-    -v $PWD/hostkeys/ssh_host_ecdsa_key.pub:/etc/ssh/ssh_host_ecdsa_key.pub:ro \
-    -v $PWD/hostkeys/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key:ro \
-    -v $PWD/hostkeys/ssh_host_ed25519_key.pub:/etc/ssh/ssh_host_ed25519_key.pub:ro \
-    -v $PWD/hostkeys/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key:ro \
-    -v $PWD/hostkeys/ssh_host_rsa_key.pub:/etc/ssh/ssh_host_rsa_key.pub:ro \
+    -v $PWD/hostkeys:/ssh-host-keys \
     -v $PWD/ssh_client_key.pub:/ssh-client-keys/ssh_client_key.pub:ro \
     -p 80:8080 \
     -p 2222:22 \
@@ -62,7 +57,7 @@ ssh \
     -i ssh_client_key \
     portmap@localhost \
     -p 2222 \
-    -N \
+    -Nv \
     -R 8080:google.it:80
 ```
 
