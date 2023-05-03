@@ -5,17 +5,10 @@ set -ex
 # Generate host keys if not already present
 ssh-keygen -A
 
-# Add all the client public keys to the authorized_keys file
-for i in /ssh-client-keys/*; do
-    [ -f "$i" ] || continue
-    cat "$i" >> /home/portmap/.ssh/authorized_keys
-done
-
-# Set valid permissions on the authorized_keys file (if it exists)
-if [ -f /home/portmap/.ssh/authorized_keys ]; then
-    chown portmap:portmap /home/portmap/.ssh/authorized_keys
-    chmod 600 /home/portmap/.ssh/authorized_keys
-fi
+# Generate the authorized_keys file
+cat /ssh-client-keys/*.pub > /home/portmap/.ssh/authorized_keys || true
+chown portmap:portmap /home/portmap/.ssh/authorized_keys
+chmod 600 /home/portmap/.ssh/authorized_keys
 
 # Start the OpenSSH Server
 #   -D: prevent sshd from detaching and becoming a daemon
