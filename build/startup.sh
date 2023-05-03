@@ -6,7 +6,7 @@ set -ex
 ssh-keygen -A
 
 # Generate the authorized_keys file
-cat /ssh-client-keys/*.pub > /home/portmap/.ssh/authorized_keys || true
+cat /ssh-client-keys/*.pub > /home/portmap/.ssh/authorized_keys 2>/dev/null || true
 chown portmap:portmap /home/portmap/.ssh/authorized_keys
 chmod 600 /home/portmap/.ssh/authorized_keys
 
