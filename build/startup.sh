@@ -59,7 +59,9 @@ for dir in /home/*; do
     user=$(basename "$dir")
 
     if [ ! -d "/ssh-client-keys/$user" ]; then
-        mkdir "/ssh-client-keys/$user"
+        # If mkdir fails, the /ssh-client-keys directory is probably mounted in
+        # read-only mode
+        mkdir "/ssh-client-keys/$user" || continue
         ssh-keygen -t ed25519 -C "$user" -N "" \
             -f "/ssh-client-keys/$user/ssh_client_key"
     fi
