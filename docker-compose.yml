@@ -11,6 +11,7 @@ services:
       - "2222:22"
       - "8001:8001"
       - "8002:8002"
+      - "8003:8003"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
