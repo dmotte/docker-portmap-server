@@ -23,6 +23,11 @@ cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || true
 
 ################################################################################
 
+if [ $# -eq 0 ]; then
+    echo "You must specify at least one user" 1>&2
+    exit 1
+fi
+
 :> /etc/ssh/sshd_config_users # Empty file
 
 for arg in "$@"; do
