@@ -1,7 +1,6 @@
 LogLevel VERBOSE
 
 PermitRootLogin no
-AllowUsers portmap
 
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
