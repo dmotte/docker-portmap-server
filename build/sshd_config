@@ -22,7 +22,4 @@ ForceCommand echo "This SSH server can only be used for remote port forwarding"
 # times
 UseDNS no
 
-Match User portmap
-    AllowTcpForwarding remote
-    PermitListen any
-    GatewayPorts yes
+Include /etc/ssh/sshd_config_users

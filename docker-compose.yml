@@ -7,14 +7,16 @@ services:
     build: build
     restart: always
     network_mode: bridge
+    ports:
+      - "2222:22"
+      - "8001:8001"
+      - "8002:8002"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ssh-host-keys:/ssh-host-keys
-      - ./volumes/ssh_client_key.pub:/ssh-client-keys/ssh_client_key.pub:ro
-    ports:
-      - "80:8080"
-      - "2222:22"
+      - ./ssh-client-keys:/ssh-client-keys
+    command: portmap01:8001 portmap02:8002
 
 volumes:
   ssh-host-keys: {}

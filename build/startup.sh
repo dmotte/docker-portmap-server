@@ -2,6 +2,8 @@
 
 set -ex
 
+################################################################################
+
 # Get host keys from /ssh-host-keys
 rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
 cp /ssh-host-keys/ssh_host_*_key /etc/ssh/ 2>/dev/null || true
@@ -19,10 +21,51 @@ chmod 644 /etc/ssh/ssh_host_*_key.pub
 cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || true
 cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || true
 
-# Generate the authorized_keys file and set correct permissions
-cat /ssh-client-keys/*.pub > /home/portmap/.ssh/authorized_keys 2>/dev/null || true
-chown portmap:portmap /home/portmap/.ssh/authorized_keys
-chmod 600 /home/portmap/.ssh/authorized_keys
+################################################################################
+
+:> /etc/ssh/sshd_config_users # Empty file
+
+for arg in "$@"; do
+    user=$(echo "$arg" | cut -d: -f1)
+    permits=$(echo "$arg" | cut -d: -f2- | tr ',' ' ')
+
+    # If the user doesn't exist
+    if ! id "$user" >/dev/null 2>&1; then
+        addgroup -S "$user" && adduser -S "$user" -G "$user"
+
+        # Enable the user to login via SSH (by setting the password field
+        # to "*" in the shadow file)
+        sed -ir "s/^$user:!/$user:*/" /etc/shadow
+
+        mkdir "/home/$user/.ssh"
+        chown "$user:$user" "/home/$user/.ssh"
+        chmod 700 "/home/$user/.ssh"
+    fi
+
+    {
+        echo "Match User $user"
+        echo "    AllowTcpForwarding remote"
+        echo "    PermitListen $permits"
+        echo "    GatewayPorts yes"
+    } >> /etc/ssh/sshd_config_users
+done
+
+for dir in /home/*; do
+    user=$(basename "$dir")
+
+    if [ ! -d "/ssh-client-keys/$user" ]; then
+        mkdir "/ssh-client-keys/$user"
+        ssh-keygen -t ed25519 -C "$user" -N "" \
+            -f "/ssh-client-keys/$user/ssh_client_key"
+    fi
+
+    cat "/ssh-client-keys/$user"/*.pub > "/home/$user/.ssh/authorized_keys" \
+        2>/dev/null || true
+    chown "$user:$user" "/home/$user/.ssh/authorized_keys"
+    chmod 600 "/home/$user/.ssh/authorized_keys"
+done
+
+################################################################################
 
 # Start the OpenSSH Server
 #   -D: prevent sshd from detaching and becoming a daemon
