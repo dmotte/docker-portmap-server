@@ -13,8 +13,6 @@ It is meant to act as a server for the [dmotte/portmap-client](https://github.co
 
 ## Usage
 
-TODO fix this part based on the new behaviour
-
 > **Note**: this Docker image uses **unprivileged users** to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
 
 The first thing you need are **host keys** for the OpenSSH server. You can generate them with the following commands:
@@ -57,9 +55,6 @@ docker run -it --rm \
     dmotte/portmap-server \
     myuser:8080
 ```
-
-TODO test the procedure above with the command
-TODO test the docker-compose stack
 
 To test the server on-the-fly, you can connect to it and setup a remote port forwarding tunnel, by running the following OpenSSH command in another shell:
 
