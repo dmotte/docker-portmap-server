@@ -15,7 +15,7 @@ It is meant to act as a server for the [dmotte/portmap-client](https://github.co
 
 TODO fix this part based on the new behaviour
 
-> **Note**: this Docker image uses a **built-in unprivileged user** (called `portmap`) to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
+> **Note**: this Docker image uses **unprivileged users** to perform the remote port forwarding stuff. As a result, it will only be possible to use **port numbers > 1024**. However this is not a problem at all, since you can still leverage the **Docker port exposure feature** to bind to any port you want on your host (e.g. `-p "80:8080"`).
 
 The first thing you need are **host keys** for the OpenSSH server. You can generate them with the following commands:
 
@@ -28,45 +28,54 @@ rm -r hostkeys/etc
 
 This creates a folder named :file_folder: `hostkeys` which has to be mounted to `/ssh-host-keys` inside the container. If you omit this step, the startup script will generate the host keys internally and try to copy them to `/ssh-host-keys`.
 
-Then you'll have to generate an **SSH key pair** for each client:
+Then you'll have to generate an **SSH key pair** for each client. For example:
 
 ```bash
-ssh-keygen -t ed25519 -C myclient -N "" -f ssh_client_key
+ssh-keygen -t ed25519 -C myclient -N "" -f myclientkey
 ```
 
 This will create two files:
 
-- :page_facing_up: `ssh_client_key`: the client's **private** SSH key, which should be given to the client
-- :page_facing_up: `ssh_client_key.pub`: the client's **public** SSH key, which should be mounted at `/ssh-client-keys/ssh_client_key.pub` inside the server container
+- :page_facing_up: `myclientkey`: the client's **private** SSH key, which should be given to the client
+- :page_facing_up: `myclientkey.pub`: the client's **public** SSH key, which is used by the OpenSSH server running inside the container to authenticate the client
 
-> **Note**: you can also specify [key options](https://man.openbsd.org/OpenBSD-current/man8/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) to the public key file, e.g. `permitlisten="8080" ssh-ed25519 AAAAC3Nza...`
+This image supports **multiple users** and **permissions** on which ports can be bound by the users. For each user you have to:
 
-Now you can start the server with:
+- Specify the username and permissions in the container **command** (mandatory). Example for two users: `alice:8001,8002 bob:any`
+- Mount the SSH public client key(s) to `/ssh-client-keys/myuser/myclientkey.pub`. If you don't do this, a keypair will be generated and put into the `/ssh-client-keys/myuser` directory
+
+> **Note**: you can also specify [key options](https://man.openbsd.org/OpenBSD-current/man8/sshd.8#AUTHORIZED_KEYS_FILE_FORMAT) in the public key file, e.g. `permitlisten="8080" ssh-ed25519 AAAAC3Nza...`
+
+When you have everything ready, you can start the server with:
 
 ```bash
 docker run -it --rm \
     -v $PWD/hostkeys:/ssh-host-keys \
-    -v $PWD/ssh_client_key.pub:/ssh-client-keys/ssh_client_key.pub:ro \
+    -v $PWD/myclientkey.pub:/ssh-client-keys/myuser/myclientkey.pub:ro \
     -p 80:8080 \
     -p 2222:22 \
-    dmotte/portmap-server
+    dmotte/portmap-server \
+    myuser:8080
 ```
+
+TODO test the procedure above with the command
+TODO test the docker-compose stack
 
 To test the server on-the-fly, you can connect to it and setup a remote port forwarding tunnel, by running the following OpenSSH command in another shell:
 
 ```bash
 ssh \
-    -i ssh_client_key \
-    portmap@localhost \
+    -i myclientkey \
+    myuser@localhost \
     -p 2222 \
     -Nv \
     -R 8080:google.it:80
 ```
 
-This will serve `http://google.it/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `ssh_client_key` must have **`600` permissions**. If this isn't the case, you can achieve it with:
+This will serve `http://google.it/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `myclientkey` must have **`600` permissions**. If this isn't the case, you can achieve it with:
 
 ```bash
-chmod 600 ssh_client_key
+chmod 600 myclientkey
 ```
 
 You can now test that your remote port forwarding tunnel is working with _cURL_:
