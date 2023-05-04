@@ -39,7 +39,7 @@ This will create two files:
 - :page_facing_up: `myclientkey`: the client's **private** SSH key, which should be given to the client
 - :page_facing_up: `myclientkey.pub`: the client's **public** SSH key, which is used by the OpenSSH server running inside the container to authenticate the client
 
-This image supports **multiple users** and **permissions** on which ports can be bound by the users. For each user you have to:
+This image supports **multiple users** and **permissions** on [which ports can be bound](https://man.openbsd.org/sshd_config#PermitListen) by the users. For each user you have to:
 
 - Specify the username and permissions in the container **command** (mandatory). Example for two users: `alice:8001,8002 bob:any`
 - Mount the SSH public client key(s) to `/ssh-client-keys/myuser/myclientkey.pub`. If you don't do this, a keypair will be generated and put into the `/ssh-client-keys/myuser` directory
