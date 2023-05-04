@@ -16,7 +16,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ssh-host-keys:/ssh-host-keys
       - ./ssh-client-keys:/ssh-client-keys
-    command: portmap01:8001 portmap02:8002
+    command: alice:8001 bob:8002,8003
 
 volumes:
   ssh-host-keys: {}
