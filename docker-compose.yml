@@ -3,7 +3,7 @@ version: "3"
 
 services:
   portmap-server:
-    image: dmotte/portmap-server
+    image: docker.io/dmotte/portmap-server:latest
     build: build
     restart: always
     network_mode: bridge
