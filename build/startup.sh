@@ -40,7 +40,7 @@ for arg in "$@"; do
 
         # Enable the user to login via SSH (by setting the password field
         # to "*" in the shadow file)
-        sed -ir "s/^$user:!/$user:*/" /etc/shadow
+        sed -Ei "s/^$user:!/$user:*/" /etc/shadow
 
         mkdir "/home/$user/.ssh"
         chown "$user:$user" "/home/$user/.ssh"
