@@ -4,7 +4,7 @@ set -ex
 
 ################################################################################
 
-# Get host keys from /ssh-host-keys
+# Get host keys from the volume
 rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
 cp /ssh-host-keys/ssh_host_*_key /etc/ssh/ 2>/dev/null || true
 cp /ssh-host-keys/ssh_host_*_key.pub /etc/ssh/ 2>/dev/null || true
@@ -17,7 +17,7 @@ chown root:root /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
 chmod 600 /etc/ssh/ssh_host_*_key
 chmod 644 /etc/ssh/ssh_host_*_key.pub
 
-# Copy the (previously missing) generated host keys to /ssh-host-keys
+# Copy the (previously missing) generated host keys to the volume
 cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || true
 cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || true
 
