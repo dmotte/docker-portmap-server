@@ -6,8 +6,8 @@ set -ex
 
 # Get host keys from the volume
 rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
-cp /ssh-host-keys/ssh_host_*_key /etc/ssh/ 2>/dev/null || true
-cp /ssh-host-keys/ssh_host_*_key.pub /etc/ssh/ 2>/dev/null || true
+cp /ssh-host-keys/ssh_host_*_key /etc/ssh/ 2>/dev/null || :
+cp /ssh-host-keys/ssh_host_*_key.pub /etc/ssh/ 2>/dev/null || :
 
 # Generate the missing host keys
 ssh-keygen -A
@@ -18,8 +18,8 @@ chmod 600 /etc/ssh/ssh_host_*_key
 chmod 644 /etc/ssh/ssh_host_*_key.pub
 
 # Copy the (previously missing) generated host keys to the volume
-cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || true
-cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || true
+cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || :
+cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || :
 
 ################################################################################
 
@@ -67,7 +67,7 @@ for dir in /home/*; do
     fi
 
     cat "/ssh-client-keys/$user"/*.pub > "/home/$user/.ssh/authorized_keys" \
-        2>/dev/null || true
+        2>/dev/null || :
     chown "$user:$user" "/home/$user/.ssh/authorized_keys"
     chmod 600 "/home/$user/.ssh/authorized_keys"
 done
