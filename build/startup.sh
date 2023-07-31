@@ -31,8 +31,8 @@ fi
 :> /etc/ssh/sshd_config_users # Empty file
 
 for arg in "$@"; do
-    user=$(echo "$arg" | cut -d: -f1)
-    permits=$(echo "$arg" | cut -d: -f2- | tr ',' ' ')
+    user="$(echo "$arg" | cut -d: -f1)"
+    permits="$(echo "$arg" | cut -d: -f2- | tr ',' ' ')"
 
     # If the user doesn't exist
     if ! id "$user" >/dev/null 2>&1; then
@@ -56,7 +56,7 @@ for arg in "$@"; do
 done
 
 for dir in /home/*; do
-    user=$(basename "$dir")
+    user="$(basename "$dir")"
 
     if [ ! -d "/ssh-client-keys/$user" ]; then
         # If mkdir fails, the /ssh-client-keys directory is probably mounted in
@@ -74,8 +74,6 @@ done
 
 ################################################################################
 
-# Start the OpenSSH Server
-#   -D: prevent sshd from detaching and becoming a daemon
-#   -e: print the log on stderr instead of syslog
-# We start it with "exec" to ensure it receives all the stop signals correctly
+# Start the OpenSSH Server with "exec" to ensure it receives all the stop
+# signals correctly
 exec /usr/sbin/sshd -De
