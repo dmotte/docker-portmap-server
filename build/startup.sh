@@ -37,9 +37,7 @@ for arg in "$@"; do
         # to "*" in the shadow file)
         sed -Ei "s/^$user:!/$user:*/" /etc/shadow
 
-        mkdir "/home/$user/.ssh"
-        chown "$user:$user" "/home/$user/.ssh"
-        chmod 700 "/home/$user/.ssh"
+        install -d -o"$user" -g"$user" -m700 "/home/$user/.ssh"
     fi
 
     {
