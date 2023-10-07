@@ -19,7 +19,7 @@ cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || :
 ################################################################################
 
 if [ $# -eq 0 ]; then
-    echo "You must specify at least one user" 1>&2
+    echo "You must specify at least one user" >&2
     exit 1
 fi
 
