@@ -31,7 +31,7 @@ for arg in "$@"; do
 
     # If the user doesn't exist
     if ! id "$user" >/dev/null 2>&1; then
-        addgroup -S "$user" && adduser -S "$user" -G "$user"
+        addgroup -S "$user"; adduser -S "$user" -G "$user"
 
         # Enable the user to login via SSH (by setting the password field
         # to "*" in the shadow file)
