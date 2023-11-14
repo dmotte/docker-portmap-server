@@ -25,7 +25,7 @@ fi
 
 :> /etc/ssh/sshd_config_users # Empty file
 
-for arg in "$@"; do
+for arg; do
     user="$(echo "$arg" | cut -d: -f1)"
     permits="$(echo "$arg" | cut -d: -f2- | tr ',' ' ')"
 
