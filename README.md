@@ -2,14 +2,14 @@
 
 ![icon](icon-149.png)
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dmotte/docker-portmap-server/release.yml?branch=main&logo=github&style=flat-square)](https://github.com/dmotte/docker-portmap-server/actions)
+[![GitHub main workflow](https://img.shields.io/github/actions/workflow/status/dmotte/docker-portmap-server/main.yml?branch=main&logo=github&label=main&style=flat-square)](https://github.com/dmotte/docker-portmap-server/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/dmotte/portmap-server?logo=docker&style=flat-square)](https://hub.docker.com/r/dmotte/portmap-server)
 
 This is a :whale: **Docker image** containing an **OpenSSH server** that can be used for **remote port forwarding** only.
 
 It is meant to act as a server for the [dmotte/portmap-client](https://github.com/dmotte/docker-portmap-client) image, but should work with any OpenSSH client.
 
-> :package: This image is also on **Docker Hub** as [`dmotte/portmap-server`](https://hub.docker.com/r/dmotte/portmap-server) and runs on **several architectures** (e.g. amd64, arm64, ...). To see the full list of supported platforms, please refer to the [`.github/workflows/release.yml`](.github/workflows/release.yml) file. If you need an architecture which is currently unsupported, feel free to open an issue.
+> :package: This image is also on **Docker Hub** as [`dmotte/portmap-server`](https://hub.docker.com/r/dmotte/portmap-server) and runs on **several architectures** (e.g. amd64, arm64, ...). To see the full list of supported platforms, please refer to the [`.github/workflows/main.yml`](.github/workflows/main.yml) file. If you need an architecture which is currently unsupported, feel free to open an issue.
 
 ## Usage
 
