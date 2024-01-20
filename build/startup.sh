@@ -26,8 +26,8 @@ fi
 :> /etc/ssh/sshd_config_users # Empty file
 
 for arg; do
-    user="$(echo "$arg" | cut -d: -f1)"
-    permits="$(echo "$arg" | cut -d: -f2- | tr ',' ' ')"
+    user=$(echo "$arg" | cut -d: -f1)
+    permits=$(echo "$arg" | cut -d: -f2- | tr ',' ' ')
 
     # If the user doesn't exist
     if ! id "$user" >/dev/null 2>&1; then
@@ -49,7 +49,7 @@ for arg; do
 done
 
 for dir in /home/*; do
-    user="$(basename "$dir")"
+    user=$(basename "$dir")
 
     if [ ! -d "/ssh-client-keys/$user" ]; then
         # If mkdir fails, the /ssh-client-keys directory is probably mounted in
