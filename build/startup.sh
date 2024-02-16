@@ -24,7 +24,7 @@ cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || :
 
 for arg; do
     user=$(echo "$arg" | cut -d: -f1)
-    permits=$(echo "$arg" | cut -d: -f2- | tr ',' ' ')
+    permits=$(echo "$arg" | cut -d: -f2- | tr , ' ')
 
     # If the user doesn't exist
     if ! id "$user" >/dev/null 2>&1; then
