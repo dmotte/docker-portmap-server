@@ -52,7 +52,7 @@ for dir in /home/*; do
         # If mkdir fails, the /ssh-client-keys directory is probably mounted in
         # read-only mode
         mkdir "/ssh-client-keys/$user" || continue
-        ssh-keygen -t ed25519 -C "$user" -N "" \
+        ssh-keygen -t ed25519 -C "$user" -N '' \
             -f "/ssh-client-keys/$user/ssh_client_key"
     fi
 

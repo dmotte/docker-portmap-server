@@ -29,7 +29,7 @@ This creates a folder named :file_folder: `hostkeys` which has to be mounted to 
 Then you'll have to generate an **SSH key pair** for each client. For example:
 
 ```bash
-ssh-keygen -t ed25519 -C myclient -N "" -f myclientkey
+ssh-keygen -t ed25519 -C myclient -N '' -f myclientkey
 ```
 
 This will create two files:
