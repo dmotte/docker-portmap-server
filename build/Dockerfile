@@ -7,7 +7,7 @@ COPY --chown=root:root --chmod=644 sshd_config /etc/ssh/
 
 EXPOSE 22
 
-RUN mkdir /ssh-host-keys /ssh-client-keys
+RUN install -dm700 /ssh-host-keys /ssh-client-keys
 
 COPY --chown=root:root --chmod=755 startup.sh /
 
