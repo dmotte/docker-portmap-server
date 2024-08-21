@@ -22,7 +22,7 @@ The first thing you need are **host keys** for the OpenSSH server. You can gener
 ```bash
 mkdir -p hostkeys/etc/ssh
 ssh-keygen -Af hostkeys
-mv hostkeys/etc/ssh/* hostkeys
+mv -thostkeys hostkeys/etc/ssh/*
 rm -r hostkeys/etc
 ```
 
