@@ -13,8 +13,8 @@ install -m644 -t/etc/ssh /ssh-host-keys/ssh_host_*_key.pub 2>/dev/null || :
 ssh-keygen -A
 
 # Copy the (previously missing) generated host keys to the volume
-cp -n /etc/ssh/ssh_host_*_key /ssh-host-keys/ 2>/dev/null || :
-cp -n /etc/ssh/ssh_host_*_key.pub /ssh-host-keys/ 2>/dev/null || :
+cp -nt/ssh-host-keys /etc/ssh/ssh_host_*_key 2>/dev/null || :
+cp -nt/ssh-host-keys /etc/ssh/ssh_host_*_key.pub 2>/dev/null || :
 
 ################################################################################
 
