@@ -76,6 +76,14 @@ curl http://localhost/
 
 For a more complex example, refer to the [`docker-compose.yml`](docker-compose.yml) file.
 
+### Environment variables
+
+List of supported **environment variables**:
+
+| Variable             | Required         | Description                                                      |
+| -------------------- | ---------------- | ---------------------------------------------------------------- |
+| `KEEPALIVE_INTERVAL` | No (default: 30) | Value for the `ClientAliveInterval` option of the OpenSSH server |
+
 ## Development
 
 If you want to contribute to this project, you can use the following one-liner to **rebuild the image** and bring up the **Docker-Compose stack** every time you make a change to the code:

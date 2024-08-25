@@ -2,6 +2,8 @@
 
 set -ex
 
+keepalive_interval=${KEEPALIVE_INTERVAL:-30}
+
 ################################################################################
 
 # Get host keys from the volume
@@ -66,4 +68,4 @@ done
 
 # Start the OpenSSH Server with "exec" to ensure it receives all the stop
 # signals correctly
-exec /usr/sbin/sshd -De
+exec /usr/sbin/sshd -De -oClientAliveInterval="$keepalive_interval"
