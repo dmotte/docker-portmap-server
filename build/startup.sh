@@ -58,8 +58,9 @@ for dir in /home/*; do
             -f "/ssh-client-keys/$user/ssh_client_key"
     fi
 
+    # Note: not using install's "-T" flag as it's not supported in Alpine
     # shellcheck disable=SC3001
-    install -o"$user" -g"$user" -Tm600 \
+    install -o"$user" -g"$user" -m600 \
         <(cat "/ssh-client-keys/$user"/*.pub 2>/dev/null || :) \
         "/home/$user/.ssh/authorized_keys"
 done
