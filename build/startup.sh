@@ -36,7 +36,7 @@ for arg; do
         # to "*" in the shadow file)
         sed -Ei "s/^$user:!/$user:*/" /etc/shadow
 
-        install -d -o"$user" -g"$user" -m700 "/home/$user/.ssh"
+        install -o"$user" -g"$user" -dm700 "/home/$user/.ssh"
     fi
 
     {
@@ -59,7 +59,7 @@ for dir in /home/*; do
     fi
 
     # shellcheck disable=SC3001
-    install -o"$user" -g"$user" -m600 \
+    install -o"$user" -g"$user" -Tm600 \
         <(cat "/ssh-client-keys/$user"/*.pub 2>/dev/null || :) \
         "/home/$user/.ssh/authorized_keys"
 done
