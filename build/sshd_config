@@ -15,7 +15,7 @@ PermitTunnel no
 PermitListen none
 PermitOpen none
 PermitTTY no
-ForceCommand echo "This SSH server can only be used for remote port forwarding"
+ForceCommand echo "This SSH server can only be used for port forwarding"
 
 # Don't look up the remote host name. This usually results in faster connection
 # times
