@@ -7,16 +7,16 @@ keepalive_interval=${KEEPALIVE_INTERVAL:-30}
 ################################################################################
 
 # Get host keys from the volume
-rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
-install -m600 -t/etc/ssh /ssh-host-keys/ssh_host_*_key 2>/dev/null || :
-install -m644 -t/etc/ssh /ssh-host-keys/ssh_host_*_key.pub 2>/dev/null || :
+rm -fv /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub
+install -vm600 -t/etc/ssh /ssh-host-keys/ssh_host_*_key 2>/dev/null || :
+install -vm644 -t/etc/ssh /ssh-host-keys/ssh_host_*_key.pub 2>/dev/null || :
 
 # Generate the missing host keys
 ssh-keygen -A
 
 # Copy the (previously missing) generated host keys to the volume
-cp -nt/ssh-host-keys /etc/ssh/ssh_host_*_key 2>/dev/null || :
-cp -nt/ssh-host-keys /etc/ssh/ssh_host_*_key.pub 2>/dev/null || :
+cp -nvt/ssh-host-keys /etc/ssh/ssh_host_*_key 2>/dev/null || :
+cp -nvt/ssh-host-keys /etc/ssh/ssh_host_*_key.pub 2>/dev/null || :
 
 ################################################################################
 
