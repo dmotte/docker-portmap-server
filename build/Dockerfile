@@ -11,4 +11,4 @@ RUN install -dvm700 /ssh-host-keys /ssh-client-keys
 
 COPY --chown=root:root --chmod=755 startup.sh /
 
-ENTRYPOINT ["/startup.sh"]
+ENTRYPOINT ["/bin/ash", "/startup.sh"]
