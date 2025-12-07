@@ -65,7 +65,7 @@ ssh -i myclientkey myuser@localhost -p2222 -NvR8080:google.it:80
 This will serve `http://google.it/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `myclientkey` must have **`600` permissions**. If this isn't the case, you can achieve it with:
 
 ```bash
-chmod 600 myclientkey
+chmod -v 600 myclientkey
 ```
 
 You can now test that your remote port forwarding tunnel is working with _cURL_:
