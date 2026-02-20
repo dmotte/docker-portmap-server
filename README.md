@@ -59,10 +59,10 @@ docker run -it --rm \
 To test the server on-the-fly, you can connect to it and setup a remote port forwarding tunnel, by running the following OpenSSH command in another shell:
 
 ```bash
-ssh -i myclientkey myuser@localhost -p2222 -NvR8080:google.it:80
+ssh -i myclientkey myuser@localhost -p2222 -NvR8080:google.com:80
 ```
 
-This will serve `http://google.it/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `myclientkey` must have **`600` permissions**. If this isn't the case, you can achieve it with:
+This will serve `http://google.com/` on port `8080` of the server container, which is exposed to port `80` of your host machine due to the `-p 80:8080` docker run flag specified before. Note that, for this to work, the `myclientkey` must have **`600` permissions**. If this isn't the case, you can achieve it with:
 
 ```bash
 chmod -v 600 myclientkey
