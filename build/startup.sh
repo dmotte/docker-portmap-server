@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 keepalive_interval=${KEEPALIVE_INTERVAL:-30}
 
@@ -30,6 +30,7 @@ for arg; do
 
     # If the user doesn't exist
     if ! id "$user" >/dev/null 2>&1; then
+        echo "Creating user and group: $user"
         addgroup -S "$user"; adduser -S "$user" -G "$user"
 
         # Enable the user to login via SSH (by setting the password field
@@ -53,14 +54,14 @@ for dir in /home/*; do
     if [ ! -d "/ssh-client-keys/$user" ]; then
         # If mkdir fails, the /ssh-client-keys directory is probably mounted in
         # read-only mode
-        mkdir "/ssh-client-keys/$user" || continue
+        mkdir -v "/ssh-client-keys/$user" || continue
         ssh-keygen -t ed25519 -C "$user" -N '' \
             -f "/ssh-client-keys/$user/ssh_client_key"
     fi
 
     # Note: not using install's "-T" flag as it's not supported in Alpine
     # shellcheck disable=SC3001
-    install -o"$user" -g"$user" -m600 \
+    install -o"$user" -g"$user" -vm600 \
         <(cat "/ssh-client-keys/$user"/*.pub 2>/dev/null || :) \
         "/home/$user/.ssh/authorized_keys"
 done
